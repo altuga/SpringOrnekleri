@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="aModel" class="com.kodcu.main.AModel"/>
+
+    <bean id="bModel" class="com.kodcu.main.BModel"/>
+
+    <bean id="cModel" class="com.kodcu.main.CModel"/>
+
+    <bean id="audit" class="com.kodcu.main.Audit"/>
+
+
+    <aop:config>
+        <aop:aspect ref="audit">
+
+            <aop:before pointcut=
+                                 "execution(* com.kodcu.main..*(..))"
+                        method="ilkKontrol"/>
+
+            <aop:after pointcut=
+                              "execution(* com.kodcu.main..*(..))"
+                       method="sonKontrol"/>
+
+            <aop:after-returning pointcut=
+                                    "execution(* com.kodcu.main..*(..))"
+                                 method="yordamDonusu"/>
+
+
+            <aop:after-throwing pointcut=
+                                    "execution(* com.kodcu.main..*(..))"
+                                method="hataYakala"/>
+
+
+
+        </aop:aspect>
+    </aop:config>
+
+</beans>

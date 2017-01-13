@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="fatura" class="com.kodcu.Fatura"/>
+    <bean id="irsaliye" class="com.kodcu.Irsaliye"/>
+
+    <bean id="carihareket" class="com.kodcu.Carihareket">
+        <constructor-arg name="belge" ref="fatura"/>
+    </bean>
+
+    <bean id="guvenlik" class="com.kodcu.Guvenlik"/>
+
+    <aop:config>
+
+        <aop:aspect ref="guvenlik">
+
+            <!--
+            <aop:pointcut id="ilksonkontrol" expression="execution(* com.kodcu.Belge.*(..))"/>
+
+            <aop:before pointcut-ref="ilksonkontrol" method="ilkKontrol"/>
+            <aop:after pointcut-ref="ilksonkontrol" method="sonKontrol"/>
+            -->
+
+
+            <aop:before pointcut="execution(* com.kodcu.Belge.*(..))" method="ilkKontrol"/>
+
+            <aop:after pointcut="execution(* com.kodcu.Belge.*(..))" method="sonKontrol"/>
+
+            <aop:around pointcut="execution(* com.kodcu.Belge.kaydet(..))" method="aroundKontrol" />
+
+            <!--
+
+
+            <aop:after-throwing pointcut="execution(* com.*.*.*(..))" method="hataYakala"/>
+            <aop:after-returning pointcut="execution(* com.*.*.*(..))" method="yordamDonusu"/>
+
+            -->
+
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>

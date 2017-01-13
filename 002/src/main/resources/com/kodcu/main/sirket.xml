@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="fonksiyonelGereksinim"
+          class="com.kodcu.main.issue.FonsiyonelGereksinim"/>
+
+
+    <bean id="fonksiyonelOlmayanGereksinim"
+          class="com.kodcu.main.issue.FonsiyonelOlmayanGereksinim"/>
+
+
+    <bean id="osman"
+          class="com.kodcu.main.issue.Programci">
+        <constructor-arg ref="fonksiyonelGereksinim"/>
+    </bean>
+
+    <bean id="zeynep"
+          class="com.kodcu.main.issue.Programci">
+        <constructor-arg ref="fonksiyonelOlmayanGereksinim"/>
+    </bean>
+
+
+    <bean id="nuri"
+          class="com.kodcu.main.issue.Programci">
+        <constructor-arg value="#{fonksiyonelOlmayanGereksinim.gereksinimler}"/>
+    </bean>
+
+    <bean id="muhasebeci" class="com.kodcu.main.issue.Muhasebeci" scope="prototype">
+        <constructor-arg value="#{3+2}"/>
+    </bean>
+
+    <bean id="satisDepartmani"
+          class="com.kodcu.main.issue.SatisDepartmani">
+    </bean>
+
+    <bean id="ortalamaHesapla"
+          class="com.kodcu.main.issue.OrtalamaHesapla">
+        <property name="rakamlar" value="#{satisDepartmani.satisElemani.![yas]}"/>
+        <property name="adlar" value="#{satisDepartmani.satisElemani.![ad]}"/>
+        <property name="satisElemaniList" value="#{satisDepartmani.satisElemani}"/>
+    </bean>
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="memur" class="com.kodcu.main.Ogretmen">
+        <constructor-arg ref="gorev"/>
+    </bean>
+
+    <bean id="gorev"
+          class="com.kodcu.main.OkulGorevi">
+
+
+    </bean>
+
+    <bean id="doktor" class="com.kodcu.main.Doktor">
+        <constructor-arg ref="saglikGorevi" />
+    </bean>
+
+    <bean id="saglikGorevi"
+          class="com.kodcu.main.SaglikGorevi">
+
+
+    </bean>
+
+</beans>
