@@ -5,15 +5,13 @@
 	<groupId>com.hellokoding</groupId>
 	<artifactId>jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-	<name>JPA Many-To-Many with Extra Columns Example</name>
-	<description>JPA Many-To-Many with Extra Columns Example</description>
+	<name>JPA Many-To-Many Example</name>
+	<description>JPA Many-To-Many Example</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
-		<relativePath/>
+		<version>1.3.5.RELEASE</version>
 	</parent>
 
 	<properties>

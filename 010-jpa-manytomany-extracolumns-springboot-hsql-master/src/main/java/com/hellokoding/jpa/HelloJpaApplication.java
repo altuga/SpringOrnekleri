@@ -1,7 +1,6 @@
 package com.hellokoding.jpa;
 
 import com.hellokoding.jpa.model.Book;
-import com.hellokoding.jpa.model.BookPublisher;
 import com.hellokoding.jpa.model.Publisher;
 import com.hellokoding.jpa.repository.BookRepository;
 import com.hellokoding.jpa.repository.PublisherRepository;
@@ -13,7 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.util.HashSet;
 
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
@@ -32,28 +31,47 @@ public class HelloJpaApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... strings) throws Exception {
-        // create new
-        Book bookA = new Book("Book A");
-        Publisher publisherA = new Publisher("Publisher A");
+        // save a couple of books
+        final Publisher publisherA = new Publisher("Publisher A");
+        final Publisher publisherB = new Publisher("Publisher B");
+        final Publisher publisherC = new Publisher("Publisher C");
 
-        BookPublisher bookPublisher = new BookPublisher();
-        bookPublisher.setBook(bookA);
-        bookPublisher.setPublisher(publisherA);
-        bookPublisher.setPublishedDate(new Date());
+        bookRepository.save(new HashSet<Book>(){{
+            add(new Book("Book A", new HashSet<Publisher>(){{
+                add(publisherA);
+                add(publisherB);
+            }}));
 
-        bookA.getBookPublishers().add(bookPublisher);
+            add(new Book("Book B", new HashSet<Publisher>(){{
+                add(publisherA);
+                add(publisherC);
+            }}));
+        }});
 
-        publisherRepository.save(publisherA);
-        bookRepository.save(bookA);
+        // fetch all books
+        for(Book book : bookRepository.findAll()) {
+            logger.info(book.toString());
+        }
 
-        // test
-        System.out.println(bookA.getBookPublishers().size());
+        // save a couple of publishers
+        final Book bookA = new Book("Book A");
+        final Book bookB = new Book("Book B");
 
-        // update
-        bookA.getBookPublishers().remove(bookPublisher);
-        bookRepository.save(bookA);
+        publisherRepository.save(new HashSet<Publisher>() {{
+            add(new Publisher("Publisher A", new HashSet<Book>() {{
+                add(bookA);
+                add(bookB);
+            }}));
 
-        // test
-        System.out.println(bookA.getBookPublishers().size());
+            add(new Publisher("Publisher B", new HashSet<Book>() {{
+                add(bookA);
+                add(bookB);
+            }}));
+        }});
+
+        // fetch all publishers
+        for(Publisher publisher : publisherRepository.findAll()) {
+            logger.info(publisher.toString());
+        }
     }
 }

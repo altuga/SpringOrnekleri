@@ -7,7 +7,7 @@ import java.util.Set;
 public class Publisher {
     private int id;
     private String name;
-    private Set<BookPublisher> bookPublishers;
+    private Set<Book> books;
 
     public Publisher(){
 
@@ -15,6 +15,11 @@ public class Publisher {
 
     public Publisher(String name){
         this.name = name;
+    }
+
+    public Publisher(String name, Set<Book> books){
+        this.name = name;
+        this.books = books;
     }
 
     @Id
@@ -35,12 +40,12 @@ public class Publisher {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "publisher")
-    public Set<BookPublisher> getBookPublishers() {
-        return bookPublishers;
+    @ManyToMany(mappedBy = "publishers")
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setBookPublishers(Set<BookPublisher> bookPublishers) {
-        this.bookPublishers = bookPublishers;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }
